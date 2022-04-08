@@ -15,11 +15,23 @@ module my_bram # (
     reg [31:0] mem[0:8191];
     wire [BRAM_ADDR_WIDTH-3:0] addr = BRAM_ADDR[BRAM_ADDR_WIDTH-1:2];
     reg [31:0] dout;
+    genvar i;
     // code for reading & writing
     initial begin
         if (INIT_FILE != "") begin
             // read data from INIT_FILE and store them into mem
-        
+            if (BRAM_EN == 1) begin
+                if (BRAM_RST == 1)
+                    assign BRAM_RDDATA = 0;
+                else if (BRAM_WE == 4b'0000)
+                    assign BRAM_RDDATA = mem[addr];
+                else begin
+                    generate for (i = 0; i < 4; i++) begin
+                        if (BRAM_WE[i] == 1)
+                            mem[addr][8 * (i + 1) - 1:8 * i] = BRAM_WRDATA[8 * (i + 1) - 1:8 * i];
+                    end endgenerate
+                end 
+            end
         end
         wait (done)
         // write data stored in mem into OUT_FILE
