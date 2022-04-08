@@ -40,6 +40,7 @@ module my_bram # (
                 end
             end 
         end
+        done = 1;
     end
     //code for BRAM implementation
     
