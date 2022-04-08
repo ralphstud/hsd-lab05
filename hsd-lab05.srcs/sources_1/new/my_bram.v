@@ -20,22 +20,26 @@ module my_bram # (
     initial begin
         if (INIT_FILE != "") begin
             // read data from INIT_FILE and store them into mem
-            if (BRAM_EN == 1) begin
-                if (BRAM_RST == 1)
-                    assign BRAM_RDDATA = 0;
-                else if (BRAM_WE == 4b'0000)
-                    assign BRAM_RDDATA = mem[addr];
-                else begin
-                    generate for (i = 0; i < 4; i++) begin
-                        if (BRAM_WE[i] == 1)
-                            mem[addr][8 * (i + 1) - 1:8 * i] = BRAM_WRDATA[8 * (i + 1) - 1:8 * i];
-                    end endgenerate
-                end 
-            end
+            $readmemh(INIT_FILE, mem);
         end
         wait (done)
         // write data stored in mem into OUT_FILE
-        
+        $writememh(OUT_FILE, mem);        
+    end
+
+    always @(posedge BRAM_CLK) begin
+        if (BRAM_EN == 1) begin
+            if (BRAM_RST == 1) begin
+                BRAM_RDDATA = 0;
+            end else if (BRAM_WE == 4'b0000) begin
+                assign BRAM_RDDATA = mem[addr];
+            end else begin
+                for (i = 0; i < 4; i = i + 1) begin
+                    if (BRAM_WE[i] == 1)
+                        mem[addr][8 * (i + 1) - 1:8 * i] = BRAM_WRDATA[8 * (i + 1) - 1:8 * i];
+                end
+            end 
+        end
     end
     //code for BRAM implementation
     
