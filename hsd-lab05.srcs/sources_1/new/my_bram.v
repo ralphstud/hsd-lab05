@@ -15,7 +15,7 @@ module my_bram # (
     reg [31:0] mem[0:8191];
     wire [BRAM_ADDR_WIDTH-3:0] addr = BRAM_ADDR[BRAM_ADDR_WIDTH-1:2];
     reg [31:0] dout;
-    genvar i;
+    integer i;
     // code for reading & writing
     initial begin
         if (INIT_FILE != "") begin
@@ -32,15 +32,14 @@ module my_bram # (
             if (BRAM_RST == 1) begin
                 BRAM_RDDATA = 0;
             end else if (BRAM_WE == 4'b0000) begin
-                assign BRAM_RDDATA = mem[addr];
+                BRAM_RDDATA = mem[addr];
             end else begin
                 for (i = 0; i < 4; i = i + 1) begin
                     if (BRAM_WE[i] == 1)
-                        mem[addr][8 * (i + 1) - 1:8 * i] = BRAM_WRDATA[8 * (i + 1) - 1:8 * i];
+                        mem[addr][(8 * i) +:8] = BRAM_WRDATA[(8 * i) +:8];
                 end
             end 
         end
-        done = 1;
     end
     //code for BRAM implementation
     
