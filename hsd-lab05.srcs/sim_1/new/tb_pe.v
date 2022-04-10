@@ -1,14 +1,48 @@
 `timescale 1ns / 1ps
-module my_pe #(
-    parameter L_RAM_SIZE = 6
-)
-    // global buffer
+module tb_pe #(
+   parameter L_RAM_SIZE = 6
+);
+   // global buffer
     reg [31:0] gb1 [0:2**L_RAM_SIZE - 1];
     reg [31:0] gb2 [0:2**L_RAM_SIZE - 1];
+    reg aclk;
+    reg aresetn;
+    reg [31:0] ain;
+    reg [31:0] bin;
+    reg valid;
+    wire dvalid;
+    wire [31:0] dout;
     
+    integer i;
     initial begin
-    
+        assign dout = 0;
+        aclk <= 0;
+        aresetn <= 0;
+        valid <= 0;
+        for (i = 0; i < 16; i = i + 1) begin
+            gb1[i] = 32'b1 << 30 | ($urandom%2 << 22);
+            gb2[i] = 32'b1 << 30 | ($urandom%2 << 22);
+        end
+        #30;
+        aresetn <= 1;
+        valid <= 1;
+        for (i = 0; i < 16; i = i + 1) begin
+            ain = gb1[i];
+            bin = gb2[i];
+            #160;
+        end
     end
     
+    always #5 aclk = ~aclk;
+    
+    my_pe MPE(
+        .aclk(aclk),
+        .aresetn(aresetn),
+        .ain(ain),
+        .bin(bin),
+        .valid(valid),
+        .dvalid(dvalid),
+        .dout(dout)
+    );
 endmodule
 

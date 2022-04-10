@@ -26,23 +26,18 @@ module tb_bram();
     integer i;
 
     initial begin
-        BRAM_CLK <= 0;
-        BRAM1_EN <= 0;
-        BRAM2_EN <= 0;
+        BRAM_CLK <= 1;
+        BRAM1_EN <= 1;
+        BRAM2_EN <= 1;
         BRAM1_RST <= 0;
         BRAM2_RST <= 0;
-        BRAM1_WE <= 0;
-        BRAM2_WE <= 0;
-        done <= 0;
-        #30;
-        BRAM1_EN <= 1;
         BRAM1_WE <= 4'b0000;
-        BRAM2_EN <= 1;
         BRAM2_WE <= 4'b1111;
         BRAM_ADDR <= 0;
+        done <= 0;
         for (i = 0; i < 2**13; i = i + 1) begin
             BRAM_ADDR = BRAM_ADDR + 4;
-            #20;
+            #30;
             BRAM2_WRDATA = BRAM1_RDDATA;            
         end
         done <= 1;
@@ -50,7 +45,7 @@ module tb_bram();
     
     always #5 BRAM_CLK = ~BRAM_CLK;
 
-    my_bram #(INIT_FILE) BRAM1 (
+    my_bram #(15, INIT_FILE, "") BRAM1 (
         .BRAM_ADDR(BRAM_ADDR),
         .BRAM_CLK(BRAM_CLK),
         .BRAM_WRDATA(BRAM1_WRDATA),
@@ -61,7 +56,7 @@ module tb_bram();
         .done(done)
     );
 
-    my_bram #(OUT_FILE) BRAM2 (
+    my_bram #(15, "", OUT_FILE) BRAM2 (
         .BRAM_ADDR(BRAM_ADDR),
         .BRAM_CLK(BRAM_CLK),
         .BRAM_WRDATA(BRAM2_WRDATA),
