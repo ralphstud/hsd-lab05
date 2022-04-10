@@ -19,8 +19,8 @@ module tb_pe #(
         aresetn <= 0;
         valid <= 0;
         for (i = 0; i < 16; i = i + 1) begin
-            gb1[i] = $urandom & 32'hbfffffff;
-            gb2[i] = $urandom & 32'hbfffffff;
+            gb1[i] = ($urandom%2 << 31) | ($urandom % 10 + 122) << 23 | ($urandom%2**10 << 12);
+            gb2[i] = ($urandom%2 << 31) | ($urandom % 10 + 122) << 23 | ($urandom%2**10 << 12);
         end
         #30;
         aresetn <= 1;

@@ -4,4 +4,7 @@ Dec  7 2018
 00:33:28
 Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.sim/sim_1/behav/xsim/glbl.v,1544155481,verilog,,,,glbl,,,,,,,,
 Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sim_1/new/tb_bram.v,1649598267,verilog,,,,tb_bram,,,,,,,,
+Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sim_1/new/tb_pe.v,1649601039,verilog,,,,tb_pe,,,,,,,,
+Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sources_1/ip/floating_point_myfusedmult/sim/floating_point_myfusedmult.vhd,1649372752,vhdl,,,,floating_point_myfusedmult,,,,,,,,
 Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sources_1/new/my_bram.v,1649596411,verilog,,Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sim_1/new/tb_bram.v,,my_bram,,,,,,,,
+Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sources_1/new/my_pe.v,1649599419,verilog,,Z:/Projects/SNU/2022-1/HardwareSystemDesign/hsd-lab05/hsd-lab05.srcs/sim_1/new/tb_pe.v,,my_pe,,,,,,,,
