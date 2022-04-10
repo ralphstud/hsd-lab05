@@ -32,7 +32,8 @@ module my_pe #(
         .m_axis_result_tvalid(dvalid),
         .m_axis_result_tdata(result)
     );
-    always @(*) begin
+
+    always @(posedge valid) begin
         Psum = result;
     end
 
